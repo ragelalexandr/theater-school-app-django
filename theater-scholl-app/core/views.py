@@ -28,7 +28,24 @@ def is_student(user):
 @login_required
 @user_passes_test(is_admin)
 def admin_dashboard(request):
-    return render(request, 'core/admin_dashboard.html')
+    # Получаем данные из базы
+    performances = TheatricalPerformance.objects.all()
+    courses = Course.objects.all()
+    instructors = Instructor.objects.all()
+    students = Student.objects.all()
+    reviews = Review.objects.filter(approved=False)
+
+    # Передаём контекст в шаблон
+    context = {
+        'performances': performances,
+        'courses': courses,
+        'instructors': instructors,
+        'students': students,
+        'reviews': reviews,
+    }
+
+    return render(request, 'core/admin_dashboard.html', context)
+
 
 @login_required
 @user_passes_test(is_instructor)
