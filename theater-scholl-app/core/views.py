@@ -32,14 +32,9 @@ def user_login(request):
             return redirect("dashboard")
         else:
             messages.error(request, "Пользователь не найден")
-            storage = get_messages(request)
-            for message in storage:
-                print(f"DEBUG MESSAGE: {message}")  # Проверка, передаётся ли ошибка
-
-            return redirect("login")
+            return redirect("login")  # Вместо render()
 
     return render(request, "core/login.html")
-
 
 
 

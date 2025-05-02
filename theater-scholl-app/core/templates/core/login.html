@@ -1,26 +1,10 @@
 <!-- theater-scholl-app/core/templates/core/login.html -->
 {% extends "core/base.html" %}
-
 {% load static %}
 
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-    {% if messages %}
-        <div class="alert alert-warning">
-            <strong>DEBUG:</strong> Найденные сообщения:
-            {% for message in messages %}
-                <p>{{ forloop.counter }}: {{ message }}</p>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            <strong>DEBUG:</strong> Сообщений нет. Проверяем передачу данных.
-        </div>
-    {% endif %}
-
-
-
     <div class="container">
         <h2 class="text-center">Вход в аккаунт</h2>
         <form method="post">
@@ -28,46 +12,15 @@
             <div class="mb-3">
                 <label for="username" class="form-label">Имя пользователя</label>
                 <input type="text" class="form-control" id="username" name="username" required autocomplete="username">
-
             </div>         
             <div class="mb-3">
                 <label for="password" class="form-label">Пароль</label>
                 <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password">
             </div>
 
-            {% if messages %}
-                <div class="alert alert-danger">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ message|safe }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% if messages %}
-            <div class="alert alert-warning">
-                <strong>DEBUG:</strong> Найдены сообщения:
-                {% for message in messages %}
-                    <p>{{ forloop.counter }}: {{ message }}</p>
-                {% endfor %}
-            </div>
-            {% else %}
-                <div class="alert alert-info">
-                    <strong>DEBUG:</strong> Сообщений нет.
-                </div>
-            {% endif %}
-        
-        
-
             <button type="submit" class="btn btn-primary">Войти</button>
-
         </form>
+
         <!-- Ссылки на регистрацию и восстановление пароля -->
         <div class="text-center mt-3">
             <a href="{% url 'password_reset' %}" class="btn btn-link">Забыли пароль?</a>
