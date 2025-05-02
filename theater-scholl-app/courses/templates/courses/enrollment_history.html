@@ -1,0 +1,23 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/enrollment_history.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>История записей на курсы</h2>
+    {% if enrollments %}
+        <div class="list-group">
+         {% for enrollment in enrollments %}
+            <div class="list-group-item">
+                <h5>{{ enrollment.courses.title }}</h5>
+                <p><strong>Преподаватель:</strong> {{ enrollment.courses.instructor }}</p>
+                <p><strong>Тип прохождения:</strong> {{ enrollment.get_enrollment_type_display }}</p>
+                <p><strong>Выбранный период:</strong> {{ enrollment.selected_start_date }} - {{ enrollment.selected_end_date }}</p>
+                <p><strong>Статус:</strong> {{ enrollment.get_status_display }}</p>
+            </div>
+         {% endfor %}
+        </div>
+    {% else %}
+         <p>Пока у вас нет записей на курсы.</p>
+    {% endif %}
+</div>
+{% endblock %}

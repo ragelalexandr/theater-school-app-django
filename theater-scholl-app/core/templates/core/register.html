@@ -1,0 +1,35 @@
+<!-- Файл: theater-scholl-app/core/templates/core/register.html -->
+{% extends "core/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Регистрация</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="full_name" class="form-label">Фамилия Имя Отчество</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password1" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="password1" name="password1" required>
+            </div>
+            <div class="mb-3">
+                <label for="password2" class="form-label">Повторите пароль</label>
+                <input type="password" class="form-control" id="password2" name="password2" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+
+        <!-- Ссылка на вход -->
+        <div class="text-center mt-3">
+            <a href="{% url 'login' %}" class="btn btn-link">Уже зарегистрированы? Войти</a>
+        </div>
+    </div>
+{% endblock %}

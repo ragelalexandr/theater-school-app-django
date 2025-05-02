@@ -1,0 +1,28 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/portfolio_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Мои проекты</h2>
+    {% if portfolios %}
+        <div class="row">
+            {% for portfolio in portfolios %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    {% if portfolio.image %}
+                    <img src="{{ portfolio.image.url }}" class="card-img-top" alt="{{ portfolio.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ portfolio.title }}</h5>
+                        <p class="card-text">{{ portfolio.description }}</p>
+                        <p class="text-muted">Добавлено: {{ portfolio.created_at|date:"d M Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>У вас пока нет проектов в портфолио.</p>
+    {% endif %}
+</div>
+{% endblock %}

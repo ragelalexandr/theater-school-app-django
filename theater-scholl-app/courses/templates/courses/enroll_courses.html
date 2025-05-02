@@ -1,0 +1,15 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/enroll_courses.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Запись на курс: {{ courses.title }}</h2>
+    <p><strong>Преподаватель:</strong> {{ courses.instructor }}</p>
+    <p><strong>Период курса:</strong> {{ courses.start_date }} - {{ courses.end_date }}</p>
+    <form method="post">
+         {% csrf_token %}
+         {{ form.as_p }}
+         <button type="submit" class="btn btn-success">Записаться</button>
+    </form>
+</div>
+{% endblock %}

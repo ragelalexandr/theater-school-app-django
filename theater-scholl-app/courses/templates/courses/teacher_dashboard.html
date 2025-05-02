@@ -1,0 +1,55 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/teacher_dashboard.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Панель управления для преподавателя</h2>
+    {% if coursess %}
+        {% for courses in coursess %}
+            <div class="card my-3">
+                <div class="card-header">
+                    <h3>{{ courses.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <p>{{ courses.description }}</p>
+                    <h5>Записи студентов:</h5>
+                    {% if courses.enrollment_set.all %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Студент</th>
+                                <th>Тип прохождения</th>
+                                <th>Период</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in courses.enrollment_set.all %}
+                            <tr>
+                                <td>{{ enrollment.student.username }}</td>
+                                <td>{{ enrollment.get_enrollment_type_display }}</td>
+                                <td>{{ enrollment.selected_start_date }} - {{ enrollment.selected_end_date }}</td>
+                                <td>{{ enrollment.get_status_display }}</td>
+                                <td>
+                                    {% if enrollment.status == 'waiting' %}
+                                        <a href="{% url 'update_enrollment_status' enrollment.id 'confirmed' %}" class="btn btn-success btn-sm">Подтвердить</a>
+                                        <a href="{% url 'update_enrollment_status' enrollment.id 'declined' %}" class="btn btn-danger btn-sm">Отклонить</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p>Нет записей для этого курса.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>У вас пока нет курсов.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,95 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Кабинет администратора</h1>
+    <p class="text-center">Добро пожаловать, {{ user.first_name }} {{ user.last_name }}!</p>
+
+    <div class="text-center mb-4">
+        <a href="{% url 'admin:index' %}" class="btn btn-dark">Управление учетными данными</a>
+    </div>
+
+    <div class="card p-4 shadow-sm">
+        <h2 class="text-center">Управление театральными представлениями</h2>
+        <a href="{% url 'create_performance' %}" class="btn btn-success w-100 mb-2">Добавить представление</a>
+        <ul class="list-group">
+            {% for performance in performances %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ performance.title }} – {{ performance.date }}</span>
+                <div>
+                    <a href="{% url 'edit_performance' performance.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'delete_performance' performance.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h2 class="text-center">Управление курсами</h2>
+        <a href="{% url 'create_course' %}" class="btn btn-success w-100 mb-2">Добавить курс</a>
+        <ul class="list-group">
+            {% for course in courses %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ course.title }} – {{ course.instructor.name }}</span>
+                <div>
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'delete_course' course.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h2 class="text-center">Управление преподавателями</h2>
+        <a href="{% url 'create_instructor' %}" class="btn btn-success w-100 mb-2">Добавить преподавателя</a>
+        <ul class="list-group">
+            {% for instructor in instructors %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ instructor.name }} ({{ instructor.specialization }})</span>
+                <div>
+                    <a href="{% url 'edit_instructor' instructor.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'delete_instructor' instructor.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h2 class="text-center">Управление студентами</h2>
+        <a href="{% url 'create_student' %}" class="btn btn-success w-100 mb-2">Добавить студента</a>
+        <ul class="list-group">
+            {% for student in students %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ student.name }}</span>
+                <div>
+                    <a href="{% url 'edit_student' student.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'delete_student' student.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h2 class="text-center">Модерация отзывов</h2>
+        <ul class="list-group">
+            {% for review in reviews %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ review.text }} от {{ review.student.name }}</span>
+                <div>
+                    {% if not review.approved %}
+                        <a href="{% url 'approve_review' review.id %}" class="btn btn-primary btn-sm">Одобрить</a>
+                    {% endif %}
+                    <a href="{% url 'delete_review' review.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="list-group-item text-center">Нет отзывов на модерацию</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Подтвердите удаление аккаунта</h2>
+    <p>Вы уверены, что хотите удалить свою учётную запись? Это действие нельзя отменить.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить учётную запись</button>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

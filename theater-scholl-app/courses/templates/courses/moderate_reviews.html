@@ -1,0 +1,42 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/moderate_reviews.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Модерация отзывов</h2>
+    {% if reviews %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Курс</th>
+                    <th>Студент</th>
+                    <th>Отзыв</th>
+                    <th>Рейтинг</th>
+                    <th>Статус</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.course.title }}</td>
+                    <td>{{ review.student.username }}</td>
+                    <td>{{ review.content }}</td>
+                    <td>{{ review.rating }}</td>
+                    <td>{{ review.get_status_display }}</td>
+                    <td>
+                        {% if review.status == 'pending' %}
+                            <a href="{% url 'update_review_status' review.id 'approved' %}" class="btn btn-success btn-sm">Одобрить</a>
+                            <a href="{% url 'update_review_status' review.id 'rejected' %}" class="btn btn-danger btn-sm">Отклонить</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+         <p>Нет отзывов для модерации.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!-- Файл: theater-scholl-app/core/templates/core/profile.html -->
+{% extends "core/base.html" %}
+
+{% block title %}Настройки профиля{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Настройки профиля</h1>
+
+    <div class="card p-4 shadow-sm">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-4">
+        <h3>Безопасность</h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{% url 'password_change' %}" class="btn btn-outline-primary w-100">Сменить пароль</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'delete_account' %}" class="btn btn-outline-danger w-100">Удалить учётную запись</a>
+            </li>
+        </ul>
+    </div>
+
+    {% if user.is_staff %}
+    <div class="mt-4">
+        <h3>Администрирование</h3>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-warning w-100">Перейти в административную панель</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

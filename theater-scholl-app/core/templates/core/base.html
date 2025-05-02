@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Театральная школа{% endblock %}</title>
+
+    <!-- Bootstrap CSS (локально) -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="container py-3">
+        <h1 class="text-center">Школа театрального искусства</h1>        
+        <!-- Навигационное меню -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">Театральная школа</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'courses' %}">Курсы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}">О проекте</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}">Контакты</a>
+                        </li>
+        
+                        {% if user.is_authenticated %}
+                            
+                            
+                            <!-- Ссылки на кабинеты -->
+                            {% if user.is_superuser %}
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-outline-dark" href="{% url 'admin_dashboard' %}">Кабинет администратора</a>
+                                </li>
+                            {% elif user.role == "instructor" %}
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-outline-dark" href="{% url 'instructor_dashboard' %}">Кабинет преподавателя</a>
+                                </li>
+                            {% elif user.role == "student" %}
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-outline-dark" href="{% url 'student_dashboard' %}">Кабинет студента</a>
+                                </li>
+                            {% endif %}
+        
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-primary" href="{% url 'profile' %}">Настройки профиля</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <span class="nav-link text-success fw-bold">Здравствуйте, {{ user.first_name }} {{ user.last_name }}!</span>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger nav-link">Выход</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-primary" href="{% url 'login' %}">Вход</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container text-center py-3">
+        <p>© 2025 TheaterScholl.by</p>
+    </footer>
+
+    <!-- Bootstrap JS (локально) -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
+    
+    <!-- Основной скрипт -->
+    <script src="{% static 'js/script.js' %}" defer></script>
+</body>
+</html>

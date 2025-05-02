@@ -1,0 +1,17 @@
+<!-- Путь: theater-scholl-app/core/templates/core/courses_list.html -->
+{% extends "core/base.html" %}
+
+{% block title %}Список курсов{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Список курсов</h2>
+        <ul>
+            {% for course in courses %}
+                <li>{{ course.name }}</li>
+            {% empty %}
+                <li>Курсы пока не добавлены.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/courses.html -->
+{% extends "core/base.html" %}
+
+{% block title %}Курсы{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Список курсов</h2>
+        {% for courses in coursess %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ courses.name }}</h5>
+                    <p><strong>Преподаватель:</strong> {{ courses.teacher.full_name }}</p>
+                    <p><strong>Даты:</strong> {{ courses.start_date }} - {{ courses.end_date }}</p>
+                    <p><strong>Детали:</strong> {{ courses.schedule_details }}</p>
+                    <a href="{% url 'enroll' courses.id %}" class="btn btn-primary">Записаться</a>  <!-- ✅ Кнопка записи -->
+                </div>
+            </div>
+        {% empty %}
+            <p>Курсы пока не доступны.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

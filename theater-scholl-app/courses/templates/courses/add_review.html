@@ -1,0 +1,14 @@
+<!-- Файл: theater-scholl-app/courses/templates/courses/add_review.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Оставить отзыв для курса: {{ course.title }}</h2>
+    <form method="post">
+         {% csrf_token %}
+         {{ form.as_p }}
+         <button type="submit" class="btn btn-success">Отправить отзыв</button>
+    </form>
+</div>
+{% endblock %}
