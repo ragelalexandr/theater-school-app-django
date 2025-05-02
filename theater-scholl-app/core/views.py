@@ -12,33 +12,6 @@ from .models import TheatricalPerformance, Course, Instructor, Student, Review
 from .forms import PerformanceForm, CourseForm, InstructorForm, StudentForm
 from django.contrib import messages
 
-from django.contrib import messages
-from django.contrib.messages import get_messages
-
-from django.contrib.messages import get_messages
-
-from django.contrib import messages
-
-from django.contrib.messages import get_messages
-
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("dashboard")
-        else:
-            messages.error(request, "Пользователь не найден")
-            return redirect("login")  # Вместо render()
-
-    return render(request, "core/login.html")
-
-
-
-
 
 def is_admin(user):
     return user.is_superuser
